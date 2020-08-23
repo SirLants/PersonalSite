@@ -1,6 +1,22 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-</body>
+<div>
+  <router-outlet></router-outlet>
+</div>
+<button mat-fab
+        color="primary"
+        class="navigation-button"
+        aria-label="Navigation button"
+        (click)="isOverlayOpen = !isOverlayOpen"
+        type="button"
+        cdkOverlayOrigin
+        #navigationTrigger="cdkOverlayOrigin">
+  <mat-icon>menu</mat-icon>
+</button>
+<ng-template cdkConnectedOverlay
+             [cdkConnectedOverlayOrigin]="navigationTrigger"
+             [cdkConnectedOverlayOpen]="isOverlayOpen">
+  <ul class="example-list">
+    <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+    <li><a routerLink="/beans" routerLinkActive="active">Beans</a></li>
+    <li><a routerLink="/image-manager" routerLinkActive="active">Home</a></li>
+  </ul>
+</ng-template>
