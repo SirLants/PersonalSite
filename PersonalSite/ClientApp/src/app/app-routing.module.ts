@@ -2,12 +2,12 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
 import { HomeComponent } from "./home/home.component";
-import { BeansComponent } from "./beans/beans.component";
+import { AboutComponent } from "./about/about.component";
 import { ImageManagerComponent } from "./image-manager/image-manager.component";
 
 export const AppRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'beans', component: BeansComponent },
+  { path: 'about', component: AboutComponent },
   { path: 'image-manager', component: ImageManagerComponent }
 ]
 

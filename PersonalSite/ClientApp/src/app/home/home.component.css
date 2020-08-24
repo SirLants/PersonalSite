@@ -1,38 +1,31 @@
-#content {
-  overflow: visible;
-  text-align: center;
-  font-size: 1.5rem;
-  z-index: 2;
+.home-container {
+  height: 100vh;
 }
 
-#container {
-  width: 100%;
+  .home-container div {
+    padding-bottom: 7vh;
+  }
+
+.center-header {
+  font-size: 5em;
 }
 
-#square {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100px;
-  height: 100px;
-  background-color: green;
+.linkedin-icon {
+  height: 36px;
+  width: 36px;
 }
 
-#rectangle {
-  position: fixed;
-  bottom: 0px;
-  left: 50px;
-  width: 200px;
-  height: 100px;
-  background-color: red;
+.blurred-me {
+  background-image: url('/assets/me.JPG');
+  height: 1080px;
+  width: 1080px;
+  border-radius: 30%;
+  opacity: .67;
+  box-shadow: 0 0 8px 8px white inset;
 }
 
-#circle {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  width: 100px;
-  height: 100px;
-  background-color: yellow;
-  border-radius: 50px;
+@media (max-width: 768px) {
+  .center-header {
+    font-size: 2em;
+  }
 }

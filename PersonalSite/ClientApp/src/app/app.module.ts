@@ -3,37 +3,30 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { OverlayModule } from '@angular/cdk/overlay';
-
 import { AppRoutingModule } from './app-routing.module';
+import { AppLayoutModule } from './layout.module';
 
 import { ParallaxDirective } from './directives/parallax.directive';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { BeansComponent } from './beans/beans.component';
 import { ImageManagerComponent } from './image-manager/image-manager.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    BeansComponent,
     ParallaxDirective,
     ImageManagerComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatIconModule,
-    OverlayModule
+    AppLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
