@@ -1,10 +1,13 @@
 <div>
-  <div *ngIf="isMobile" class="py-2" fxLayout="row" fxLayoutAlign="space-around center">
+  <div *ngIf="isMobile" class="navigation-mobile" fxLayout="row navigation-header" fxLayoutAlign="space-around center">
     <a mat-button routerLink="/" routerLinkActive="mat-accent" [routerLinkActiveOptions]="{ exact: true }">Home</a>
     <a mat-button routerLink="/about" routerLinkActive="mat-accent">About</a>
     <a mat-button routerLink="/image-manager" routerLinkActive="mat-accent">Projects</a>
   </div>
-  <router-outlet></router-outlet>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+  
 </div>
 <mat-list *ngIf="!isMobile" role="list" class="navigation-links" appParallax [ratio]="-0.4">
   <mat-list-item role="listitem"><a class="navigation-link" routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a></mat-list-item>

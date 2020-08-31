@@ -1,0 +1,79 @@
+<h3 class="mt-0 mb-1 pt-1 d-inline-block">Documents</h3>
+<button *ngIf="readyToUpload" class="btn btn-link pt-1" (click)="setUploadReady()">
+  Change
+</button>
+<div *ngIf="readyToUpload; else notReadyToUpload">
+  <div *ngIf="taxCount > 0">
+    <strong>Tax Documents:</strong> {{formatTaxTypes()}}
+  </div>
+  <div *ngIf="nontaxableCount > 0">
+    <strong>Nontaxable Documents:</strong> {{formatNontaxableTypes()}}
+  </div>
+  <div *ngIf="supplementalCount > 0">
+    <strong>Supplemental Documents:</strong> {{formatSupplementalTypes()}}
+  </div>
+</div>
+<ng-template #notReadyToUpload>
+  <div class="text-xtra-muted mb-1">Select the document(s) you want to upload</div>
+  <div *ngIf="taxDocumentTypes && taxDocumentTypes.length" class="clearfix">
+    <h4>Tax Documents</h4>
+    <div *ngIf="isViewingAll || viewableTaxDocumentTypes().length > 0; else noTaxDocs">
+      <div *ngFor="let document of viewableTaxDocumentTypes()">
+        <div class="col-md-4 pad-null">
+          <input [(ngModel)]="document.selected"
+                 type="checkbox"
+                 [id]="'taxDoc' + document.typeInd + ''"
+                 [name]="'taxDoc' + document.typeInd + ''"
+                 (ngModelChange)="updateDisplay()"
+                 [disabled]="disableTax">
+          <label [for]="'taxDoc' + document.typeInd + ''">
+            <span>{{document.title}}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <ng-template #noTaxDocs>
+      <span class="less-top-margin text-xtra-muted">No tax documents required</span>
+    </ng-template>
+    <button class="btn btn-link btn-selection less-top-margin" *ngIf="!isViewingAll" (click)="viewAll()">
+      (View All)
+    </button>
+  </div>
+  <div *ngIf="nontaxableDocumentTypes && nontaxableDocumentTypes.length" class="mt-2">
+    <h4 class="mt-1">Nontaxable Documents</h4>
+    <span class="text-xtra-muted mb-1">All nontaxable doucmentation must contain recipient, amount received, frequency, and dates.</span>
+    <div *ngFor="let document of nontaxableDocumentTypes">
+      <div>
+        <input [(ngModel)]="document.selected"
+               type="checkbox"
+               [id]="'nontaxableDoc' + document.typeInd + ''"
+               [name]="'nontaxableDoc' + document.typeInd + ''"
+               (ngModelChange)="updateDisplay()"
+               [disabled]="disableNontaxable || document.disabled">
+        <label [for]="'nontaxableDoc' + document.typeInd + ''">
+          <span>{{document.title}}</span>
+        </label>
+        <span *ngIf="helpText[document.typeInd]" class="text-xtra-muted document-help">{{helpText[document.typeInd]}}</span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="supplementalDocumentTypes && supplementalDocumentTypes.length" class="mt-2">
+    <h4>Supplemental Documents</h4>
+    <div *ngFor="let document of supplementalDocumentTypes;">
+      <div>
+        <input [(ngModel)]="document.selected"
+               type="checkbox"
+               [id]="'suppDoc' + document.typeInd + ''"
+               [name]="'suppDoc' + document.typeInd + ''"
+               (ngModelChange)="updateDisplay()"
+               [disabled]="disableSupplemental || document.disabled">
+        <label [for]="'suppDoc' + document.typeInd + ''">
+          <span>{{document.title}}</span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary mt-2" [disabled]="!disableTax && !disableNontaxable && !disableSupplemental" (click)="setUploadReady()">
+    Ready to Upload
+  </button>
+</ng-template>

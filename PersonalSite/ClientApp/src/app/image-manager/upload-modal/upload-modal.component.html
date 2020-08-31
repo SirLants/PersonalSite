@@ -1,0 +1,63 @@
+<div *ngIf="currentlyUploading; else notCurrentlyUploading" class="progress mb-0">
+  <div *ngIf="isFileUpload" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" [attr.aria-valuenow]="uploadProgress" aria-valuemin="0" aria-valuemax="100" [style.width.%]="uploadProgress">
+    <span class="sr-only">In Progress</span>
+  </div>
+  <div *ngIf="!isFileUpload" class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+    <span class="sr-only">In Progress</span>
+  </div>
+</div>
+<ng-template #notCurrentlyUploading>
+  <div *ngIf="localSaveResult.uploadSuccessful; else uploadUnsuccessful">
+    <div *ngIf="localSaveResult.uploadError === fileError.PasswordProtected; else unprotected">
+      <div class="alert alert-danger">
+        <div *ngIf="!passwordAttempted; else attempted">
+          <strong>Password Protected</strong>
+          <p class="error-text">
+            {{localSaveResult.fileName}} is protected by a password. Enter your password to unlock your document.
+          </p>
+        </div>
+        <ng-template #attempted>
+          <strong>Password Protected</strong>
+          <p class="error-text">
+            An incorrect password was entered. Enter your password to submit your document.
+          </p>
+        </ng-template>
+      </div>
+      <
+      <form-wrapper name="pdfPassword"
+                    labelText="Password">
+        <text-input [(textValue)]='passwordValue'
+                    [protectPassword]='true'
+                    name="pdfPassword"
+                    cssClasses="ga-form-medium"
+                    maxLength='50'></text-input>
+      </form-wrapper>
+    </div>
+    <ng-template #unprotected>
+      <div class="mb-2">Your file(s) uploaded successfully.</div>
+      <div>What would you like to do next?</div>
+    </ng-template>
+  </div>
+  <ng-template #uploadUnsuccessful>
+    <div *ngIf="localSaveResult.uploadError !== fileError.PasswordProtected; else passwordProtected" class="alert alert-danger" style="margin-bottom: 0;">
+      <div *ngIf="localSaveResult.uploadError === fileError.FileFormat">
+        <strong>Invalid File Type</strong>
+        <p class="error-text">
+          Cannot upload {{localSaveResult.fileName}}. Please select a PDF file.
+        </p>
+      </div>
+      <div *ngIf="localSaveResult.uploadError === fileError.FileSize">
+        <strong>File Size</strong>
+        <p class="error-text">
+          {{localSaveResult.fileName}} must be less than 20 MB.
+        </p>
+      </div>
+      <div *ngIf="localSaveResult.uploadError === fileError.Duplicate">
+        <strong>Duplicate File</strong>
+        <p class="error-text">
+          {{localSaveResult.fileName}} has already been processed and cannot be uploaded again.
+        </p>
+      </div>
+    </div>
+  </ng-template>
+</ng-template>

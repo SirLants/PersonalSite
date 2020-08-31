@@ -9,3 +9,7 @@
 .active-link {
   font-size: 1.4em;
 }
+
+.navigation-mobile {
+  height: 5vh;
+}

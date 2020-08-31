@@ -1,0 +1,30 @@
+<div *ngIf="isOpen">
+  <div class="modal-overlay" (click)="close(true)"></div>
+
+  <div class="modal-dialog {{ classname }}" role="document" [ngStyle]="styles">
+    <div class="modal-content">
+      <div *ngIf="modalTitle != null" class="modal-header">
+        <h3 class="ga-modal-title">{{ modalTitle }}</h3>
+        <button
+          *ngIf="!blocking"
+          type="button"
+          (click)="close(true)"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="modalTitle == null && showHeader" class="modal-header">
+        <ng-content select="[modal-header]"></ng-content>
+      </div>
+      <div class="modal-body clearfix" [ngStyle]="bodyStyles" [ngClass]="bodyClasses">
+        <ng-content></ng-content>
+      </div>
+      <div *ngIf="showFooter" class="modal-footer" [ngClass]="footerClasses">
+        <ng-content select="[modal-footer]"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

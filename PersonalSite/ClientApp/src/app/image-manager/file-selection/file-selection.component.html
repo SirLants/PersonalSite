@@ -1,0 +1,105 @@
+<h3 class="mt-0 mb-1 pt-1 d-inline-block">Upload</h3>
+<div class="text-xtra-muted mb-1" *ngIf="!readyToUpload">Select your document(s) before uploading</div>
+<div class="text-xtra-muted" *ngIf="readyToUpload && selectedFiles.length < 1">
+  <div class="mb-1">How do you want to provide your document(s)?</div>
+  <strong>Image Instructions</strong>
+  <ul class="mb-2">
+    <li>One page per image</li>
+    <li>Position page directly underneath your camera on a flat surface</li>
+  </ul>
+</div>
+<div class="mb-1">
+  <div *ngIf="pdfError" class="alert alert--file-error alert-danger">
+    <div *ngIf="pdfError === fileError.FileFormat">
+      <strong>Invalid File Type</strong>
+      <p class="error-text">
+        Cannot upload {{pdfErrorName}}. Please select a PDF file.
+      </p>
+    </div>
+    <div *ngIf="pdfError === fileError.FileSize">
+      <strong>File Size</strong>
+      <p class="error-text">
+        {{pdfErrorName}} must be less than 20 MB.
+      </p>
+    </div>
+  </div>
+  <div *ngIf="imageErrors.length > 0" class="alert alert--file-error alert-danger">
+    <div *ngIf="imageErrorsContain(fileError.FileFormat)">
+      <strong>Invalid File Type{{imageErrorsCount(fileError.FileFormat) | plurality}}</strong>
+      <p class="error-text">
+        Only JPEG images are supported. {{imageErrorsCount(fileError.FileFormat)}} image{{imageErrorsCount(fileError.FileFormat) | plurality}} removed from upload.
+      </p>
+    </div>
+    <div *ngIf="imageErrorsContain(fileError.Orientation)">
+      <strong>Image Orientation</strong>
+      <p class="error-text">
+        Horizontal images are not supported. {{imageErrorsCount(fileError.Orientation)}} image{{imageErrorsCount(fileError.Orientation) | plurality}} removed from upload.
+      </p>
+    </div>
+    <div *ngIf="imageErrorsContain(fileError.FileSize)">
+      <strong>File Size</strong>
+      <p class="error-text">
+        Total file size of images must be less than 20 MB. {{imageErrorsCount(fileError.FileSize)}} image{{imageErrorsCount(fileError.FileSize) | plurality}} were removed from upload.
+      </p>
+    </div>
+    <div *ngIf="imageErrorsContain(fileError.Duplicate)">
+      <strong>Duplicate Images</strong>
+      <p class="error-text">
+        Duplicate images were detected. {{imageErrorsCount(fileError.Duplicate)}} images{{imageErrorsCount(fileError.Duplicate) | plurality}} were removed from upload.
+      </p>
+    </div>
+  </div>
+  <button *ngIf="fileType !== 'jpg' && selectedFiles.length < 1"
+          [disabled]="!readyToUpload"
+          class="btn btn-secondary file-select-button mr-1"
+          (click)="triggerPDFMenu()">
+    PDF
+  </button>
+  <div *ngIf="fileType === 'pdf'" class="mb-2">
+    <span>
+      {{selectedFiles[0] ? selectedFiles[0].name : ''}}
+      <button class="btn btn-danger ml-1" (click)="removePDF()">Remove</button>
+    </span>
+  </div>
+  <div style="width: 100%" *ngIf="fileType === 'jpg' && selectedFiles && selectedFiles.length">
+    <div class="image-container mb-2">
+      <button *ngIf="previewIndex > 0"
+              class="btn-nav btn-back"
+              aria-hidden="true"
+              (click)="decrementPreviewIndex()">
+        <mat-icon class="chevron-nav">navigate_before</mat-icon>
+      </button>
+      <button *ngIf="previewIndex < (selectedFiles.length - 1)"
+              class="btn-nav btn-next"
+              aria-hidden="true"
+              (click)="incrementPreviewIndex()">
+        <mat-icon class="chevron-nav">navigate_next</mat-icon>
+      </button>
+      <div class="count">
+        {{previewIndex + 1}} of {{selectedFiles.length}}
+      </div>
+      <button class="btn btn-lightgray btn-nav btn-remove-image"
+              (click)="removeImage()"
+              [disabled]="!readyToUpload">
+        <span class="remove-text">Remove</span>
+      </button>
+      <img *ngIf="selectedFiles[previewIndex]" [src]="selectedFiles[previewIndex].preview.source" width="300" />
+    </div>
+    <div *ngIf="originalFileSize > 0">Original Size: {{originalFileSize}} kb</div>
+    <div>Compressed Size: {{compressedFileSize}} kb</div>
+  </div>
+  <button *ngIf="selectedFiles.length > 0 && readyToUpload"
+          class="btn btn-primary"
+          (click)="upload()"
+          disabled>
+    Upload
+  </button>
+  <button *ngIf="fileType !== 'pdf'"
+          [disabled]="!readyToUpload || fileSizeExceeded"
+          class="btn btn-secondary file-select-button mr-1"
+          (click)="triggerImageMenu()">
+    {{fileType === 'jpg' ? 'Add Images' : 'Images'}}
+  </button>
+  <input type="file" #pdfInput style="display: none;" (change)="onSelectPDF()" accept="application/pdf" />
+  <input type="file" #imageInput style="display: none;" (change)="onSelectImages()" accept="image/jpeg;capture=camera" multiple />
+</div>

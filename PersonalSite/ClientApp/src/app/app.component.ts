@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
-    this.breakpointObserver.observe('(max-width: 768px)').subscribe(result => {
+    this.breakpointObserver.observe('(max-width: 600px)').subscribe(result => {
       this.isMobile = result.matches;
     });
   }

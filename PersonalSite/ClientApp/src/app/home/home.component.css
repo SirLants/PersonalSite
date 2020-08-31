@@ -1,5 +1,6 @@
 .home-container {
   height: 100vh;
+  background-color: #F0F0F0;
 }
 
   .home-container div {
@@ -15,17 +16,12 @@
   width: 36px;
 }
 
-.blurred-me {
-  background-image: url('/assets/me.JPG');
-  height: 1080px;
-  width: 1080px;
-  border-radius: 30%;
-  opacity: .67;
-  box-shadow: 0 0 8px 8px white inset;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .center-header {
     font-size: 2em;
+  }
+
+  .home-container {
+      height: 95vh;
   }
 }

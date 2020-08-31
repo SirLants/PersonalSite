@@ -1,38 +1,80 @@
-#content {
-  overflow: visible;
-  text-align: center;
-  font-size: 1.5rem;
-  z-index: 2;
-}
-
-#container {
+.about-panel {
   width: 100%;
+  height: 100%;
+  min-height: 50vh;
 }
 
-#square {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100px;
-  height: 100px;
-  background-color: green;
+  .about-panel .image-container {
+    height: 100%;
+    padding: 5px;
+  }
+
+    .about-panel .image-container .image {
+      height: 100%;
+      max-height: 50vh;
+      width: 100%;
+      object-fit: contain;
+    }
+
+  .about-panel.first {
+    background-color: #B1E9D3;
+  }
+
+  .about-panel.second {
+    background-color: #B1D3E9;
+  }
+
+  .about-panel.third {
+    background-color: #D3E9B1;
+  }
+
+.about-header {
+  height: 8vh;
+  background-color: #E9D3B1;
 }
 
-#rectangle {
-  position: fixed;
-  bottom: 0px;
-  left: 50px;
-  width: 200px;
-  height: 100px;
-  background-color: red;
+  .about-header h1 {
+    font-size: 3.5rem;
+  }
+
+.about-panel-body h2 {
+  font-size: 1.4vw;
+  margin-bottom: .5rem;
 }
 
-#circle {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
-  width: 100px;
-  height: 100px;
-  background-color: yellow;
-  border-radius: 50px;
+.about-panel-body p {
+  font-size: 1.15vw;
+}
+
+@media (max-width: 600px) {
+  .about-panel {
+    height: 100%;
+  }
+
+  .about-panel-body {
+    padding: 1em;
+  }
+
+  .about-panel-body h2 {
+    font-size: inherit;
+    margin-bottom: 0;
+  }
+
+  .about-panel-body p {
+    font-size: inherit;
+  }
+
+  .about-header h1 {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .about-panel-body h2 {
+    font-size: 1.5rem;
+  }
+
+  .about-panel-body p {
+    font-size: 1.1rem;
+  }
 }

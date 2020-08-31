@@ -1,0 +1,70 @@
+<div class="image-manager-container">
+  <div *ngIf="model" class="container-fluid clearfix">
+    <div>
+      <h1 class="mt-4 d-inline-block">Upload Documents</h1>
+      <div class="clearfix mb-2">
+        <p class="mb-1"><strong>Application ID: </strong>{{model.settings.legacyApplicationId}}</p>
+        <p class="mb-1"><span class="text-muted">Applicant:</span> {{[model.settings.applicantFirstName, model.settings.applicantLastName] | name}} ({{model.settings.applicantSSN}})</p>
+        <p class="mb-1">
+          <span class="text-muted">Co-Applicant:</span> <span *ngIf="model.settings.hasCoApplicant; else noCoApp">{{[model.settings.coApplicantFirstName, model.settings.coApplicantLastName] | name}} ({{model.settings.coApplicantSSN}})</span>
+          <ng-template #noCoApp>N/A</ng-template>
+        </p>
+        <p class="mb-1"><span class="text-muted">Address:</span> {{model.settings.addressLine1}} {{model.settings.city}}, {{model.settings.state}} {{model.settings.zipcode}}</p>
+      </div>
+    </div>
+    <div class="clearfix mb-2 row">
+      <div class="col-1 pr-0" style="max-width: 40px;">
+        <mat-icon style="margin-top: 5px;">looks_one</mat-icon>
+      </div>
+      <div class="col-11">
+        <type-selection [(taxDocumentTypes)]="model.taxDocumentTypes"
+                        [(nontaxableDocumentTypes)]="model.nontaxableDocumentTypes"
+                        [(supplementalDocumentTypes)]="model.supplementalDocumentTypes"
+                        [resetComponent]="fileSubject.asObservable()"></type-selection>
+      </div>
+    </div>
+    <div class="clearfix row">
+      <div class="col-1 pr-0" style="max-width: 40px;">
+        <mat-icon style="margin-top: 5px;">looks_two</mat-icon>
+      </div>
+      <div class="col-11">
+        <file-selection [(selectedFiles)]="selectedFiles"
+                        [resetComponent]="typeSubject.asObservable()"
+                        (updateFileType)="fileType = $event"
+                        (uploadFiles)="upload()"></file-selection>
+      </div>
+    </div>
+  </div>
+  <ga-modal [modalTitle]="uploadModalTitle"
+            [modalId]="uploadModalId"
+            [blocking]='true'
+            [showFooter]='!currentlyUploading'
+            classname="fixed centered"
+            (triggerModal)="isUploadModalOpen = $event">
+    <upload-modal *ngIf="isUploadModalOpen"
+                  [saveResult]="uploadSubject.asObservable()"
+                  [passwordResult]="passwordSubject.asObservable()"
+                  [currentlyUploading]="currentlyUploading"
+                  [isFileUpload]="isFileUpload"
+                  (passwordUpdated)="updatePassword($event)"></upload-modal>
+    <div modal-footer class="text-center">
+      <div *ngIf="processingPasswordPdf" class="centered">
+        <button class="btn btn-primary" [disabled]="pdfPassword.length === 0" (click)="unlockPasswordProtectedPDF()">Unlock</button>
+        <button class="btn btn-secondary" (click)="closeUploadModal()">Cancel</button>
+      </div>
+
+      <button *ngIf="!processingPasswordPdf && !isUploadComplete" class="btn btn-primary centered" (click)="closeUploadModal()">
+        Close
+      </button>
+
+      <ng-container *ngIf="isUploadComplete">
+        <button class="btn btn-primary" (click)="backToSummary()">
+          View Summary
+        </button>
+        <button class="btn btn-link" (click)="closeUploadModal(true)">
+          Upload another Document
+        </button>
+      </ng-container>
+    </div>
+  </ga-modal>
+</div>

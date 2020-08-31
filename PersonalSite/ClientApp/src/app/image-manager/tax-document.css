@@ -1,0 +1,52 @@
+button {
+  font-weight: normal;
+}
+
+.btn.btn-default[disabled]:hover {
+  background-color: #6e6e6e;
+  opacity: .40;
+}
+
+.section-header {
+  margin-top: 0;
+  padding-top: 5px;
+  display: inline-block;
+}
+
+.btn-selection {
+  display: block;
+  clear: both;
+  padding-left: 0px
+}
+
+.error-text {
+  margin-bottom: 0;
+}
+
+.document-help {
+  margin: -3px 0 10px 20px;
+}
+
+.less-top-margin {
+  margin-top: -10px;
+}
+
+h1 {
+  color: #094A64;
+}
+
+h3 {
+  color: #717880;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+h4 {
+  font-size: 13px;
+  color: #09c;
+  font-weight: 600;
+}
+
+.text-xtra-muted {
+  color: #a9a9a9;
+}

@@ -32,7 +32,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="ClientApp\src\app\app-routing.module.ts" />
+    <None Remove="ClientApp\src\app\image-manager\and-string.pipe.ts" />
+    <None Remove="ClientApp\src\app\image-manager\image-manager-routing.module.ts" />
+    <None Remove="ClientApp\src\app\image-manager\pipes\index.ts" />
+    <None Remove="ClientApp\src\app\image-manager\pipes\name.pipe.ts" />
+    <None Remove="ClientApp\src\app\image-manager\pipes\plurality.pipe.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\image-manager\image-manager.module.ts" />
   </ItemGroup>
 
   <ItemGroup>
